@@ -112,7 +112,7 @@ Slots:
   "gocdnjs not found. Install gocdnjs by M-x `cdnjs-install-gocdnjs'.")
 
 (defconst cdnjs/gocdnjs-update-msg-format
-  "your gocdnjs is old. Update latest gocdnjs by M-x `cdnjs-install-gocdnjs'.")
+  "your gocdnjs is old. Update gocdnjs to latest gocdnjs by M-x `cdnjs-install-gocdnjs'.")
 
 (defvar cdnjs/gocdnjs-version-checked nil)
 
@@ -165,7 +165,7 @@ Slots:
   (if (executable-find cdnjs-gocdnjs-program)
       (unless cdnjs/gocdnjs-version-checked
         (let ((ver (cdnjs/gocdnjs-version cdnjs-gocdnjs-program)))
-          (if (version< cdnjs/gocdnjs-required-version ver)
+          (if (version< ver cdnjs/gocdnjs-required-version)
               (user-error (cdnjs/gocdnjs-update-message ver))
             (setq cdnjs/gocdnjs-version-checked t))))
     (user-error cdnjs/gocdnjs-notfound-msg)))
