@@ -55,7 +55,8 @@
                 (function :tag "Other")))
 
 (defcustom cdnjs-gocdnjs-program
-  (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name)
+  (or (executable-find cdnjs/gocdnjs-name)
+      (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name))
   "Name of `gocdnjs' command.")
 
 
