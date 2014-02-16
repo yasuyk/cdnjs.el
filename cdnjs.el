@@ -538,7 +538,7 @@ wget and unzip commands are required to use this function."
 
 ;;;###autoload
 (defun cdnjs-list-packages ()
-  "Display a list of packages that are retrieved from cdnjs.com."
+  "List packages that are retrieved from cdnjs.com."
   (interactive)
   (cdnjs/verify-gocdnjs-version)
   (deferred:$
@@ -569,7 +569,7 @@ wget and unzip commands are required to use this function."
 
 ;;;###autoload
 (defun cdnjs-select-and-insert-url ()
-  "Select version and URL of a JavaScript or CSS package, then insert URL."
+  "Select version and file of a JavaScript or CSS package, then insert URL."
   (interactive)
   (cdnjs/verify-gocdnjs-version)
   (deferred:$
