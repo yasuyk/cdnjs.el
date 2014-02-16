@@ -16,6 +16,13 @@ The Emacs package uses [gocdnjs] to get information about [cdnjs] packages.
 - Download Javascript or CSS packages fom [cdnjs].
 - Insert [cdnjs] URL.
 
+### List packages and download a package
+![](https://raw.github.com/yasuyk/misc/master/cdnjs.el/demo-cdnjs-list-and-download.gif)
+
+### Insert URL
+![](https://raw.github.com/yasuyk/misc/master/cdnjs.el/demo-cdnjs-insert-url.gif)
+
+
 ## Requirement
 
 - [gocdnjs] used as external program.
