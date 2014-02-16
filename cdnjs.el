@@ -51,12 +51,12 @@
 (defcustom cdnjs-completing-read-function 'ido-completing-read
   "Function to be called when requesting input from the user."
   :group 'cdnjs
-  :type '(radio (function-item completing-read)
-                (function :tag "Other")))
+  :type '(choice (const :tag "Ido" ido-completing-read)
+                 (const :tag "Plain" completing-read)
+                 (function :tag "Other function")))
 
 (defcustom cdnjs-gocdnjs-program
-  (or (executable-find cdnjs/gocdnjs-name)
-      (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name))
+  (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name)
   "Name of `gocdnjs' command.")
 
 
@@ -109,7 +109,8 @@ Slots:
 (defconst cdnjs/gocdnjs-required-version "0.1.0")
 
 (defconst cdnjs/gocdnjs-notfound-msg
-  "gocdnjs not found. Install gocdnjs by M-x `cdnjs-install-gocdnjs'.")
+  "gocdnjs not found. Install gocdnjs by M-x `cdnjs-install-gocdnjs' \
+and configure `cdnjs-gocdnjs-program'.")
 
 (defconst cdnjs/gocdnjs-update-msg-format
   "your gocdnjs is old. Update gocdnjs to latest gocdnjs by M-x `cdnjs-install-gocdnjs'.")
@@ -160,8 +161,8 @@ Slots:
    (split-string
     (car (process-lines gocdnjs "-v")))))
 
-(defun cdnjs/verify-gocdnjs-program-installed ()
-  "Verify `gocdnjs' exist or signal a pilot error."
+(defun cdnjs/verify-gocdnjs-version ()
+  "Verify version of `gocdnjs' or signal a pilot error."
   (if (executable-find cdnjs-gocdnjs-program)
       (unless cdnjs/gocdnjs-version-checked
         (let ((ver (cdnjs/gocdnjs-version cdnjs-gocdnjs-program)))
@@ -511,7 +512,9 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 
 ;;;###autoload
 (defun cdnjs-install-gocdnjs ()
-  "Install `gocdnjs' command."
+  "Install `gocdnjs' command.
+
+wget and unzip commands are required to use this function."
   (interactive)
   (cdnjs/check-executable "wget")
   (cdnjs/check-executable "unzip")
@@ -537,7 +540,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 (defun cdnjs-list-packages ()
   "Display a list of packages that are retrieved from cdnjs.com."
   (interactive)
-  (cdnjs/verify-gocdnjs-program-installed)
+  (cdnjs/verify-gocdnjs-version)
   (deferred:$
     (deferred:next 'cdnjs/get-cdnjs/info)
     (deferred:nextc it 'cdnjs/show-cdnjs-list)))
@@ -546,7 +549,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 (defun cdnjs-describe-package ()
   "Describe the PACKAGE information."
   (interactive)
-  (cdnjs/verify-gocdnjs-program-installed)
+  (cdnjs/verify-gocdnjs-version)
   (deferred:$
     (deferred:next 'cdnjs/get-cdnjs/info)
     (deferred:nextc it 'cdnjs/select-and-get-package-info)
@@ -557,7 +560,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 (defun cdnjs-insert-url ()
   "Insert URL of a JavaScript or CSS package."
   (interactive)
-  (cdnjs/verify-gocdnjs-program-installed)
+  (cdnjs/verify-gocdnjs-version)
   (deferred:$
     (deferred:next 'cdnjs/get-cdnjs/info)
     (deferred:nextc it 'cdnjs/select-and-get-package-info)
@@ -568,7 +571,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 (defun cdnjs-select-and-insert-url ()
   "Select version and URL of a JavaScript or CSS package, then insert URL."
   (interactive)
-  (cdnjs/verify-gocdnjs-program-installed)
+  (cdnjs/verify-gocdnjs-version)
   (deferred:$
     (deferred:next 'cdnjs/get-cdnjs/info)
     (deferred:nextc it 'cdnjs/select-and-get-package-info)
@@ -579,7 +582,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 (defun cdnjs-update-package-cache ()
   "Update the package cache file."
   (interactive)
-  (cdnjs/verify-gocdnjs-program-installed)
+  (cdnjs/verify-gocdnjs-version)
   (deferred:$
     (deferred:process cdnjs-gocdnjs-program "u")
     (deferred:error it 'message)
