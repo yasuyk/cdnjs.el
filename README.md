@@ -91,8 +91,7 @@ After installed, configure `cdnjs-gocdnjs-program` as follow:
 
     `M-x cdnjs-update-package-cache`
 
-
-## Configuration
+## Customization
 
 - Function to be called when requesting input from the user:
 
