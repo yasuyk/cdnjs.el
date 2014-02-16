@@ -349,7 +349,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
   (let ((name (button-get button 'name))
         (version (button-get button 'version)))
     (when (y-or-n-p (format "Download %s(%s)? " name version))
-      (let ((dir (read-directory-name "Directory: ")))
+      (let ((dir (f-expand (read-directory-name "Directory: "))))
         (message "Downloading...")
         (deferred:$
           (deferred:process cdnjs-gocdnjs-program "d" name "-v" version "-d" dir)
