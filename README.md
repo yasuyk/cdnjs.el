@@ -8,7 +8,7 @@ A front end for http://cdnjs.com
 This is an Emacs package for searching, getting information and
 downloading Javascript or CSS packages from [cdnjs].
 
-The package uses [gocdnjs] to get information about [cdnjs] packages.
+The Emacs package uses [gocdnjs] to get information about [cdnjs] packages.
 
 ## Features
 
