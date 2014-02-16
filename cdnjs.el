@@ -76,7 +76,7 @@ just return nil."
   (interactive (list t))
   (let ((version (pkg-info-version-info 'cdnjs)))
     (when show-version
-      (message "Flycheck version: %s" version))
+      (message "cdnjs version: %s" version))
     version))
 
 ;;; Global variable
