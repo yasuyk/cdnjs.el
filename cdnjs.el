@@ -623,7 +623,7 @@ wget and unzip commands are required to use this function."
   (interactive)
   (cdnjs/verify-gocdnjs-version)
   (deferred:$
-    (deferred:process cdnjs-gocdnjs-program "u")
+    (deferred:process cdnjs-gocdnjs-program "update")
     (deferred:error it 'message)
     (deferred:nextc it
       (lambda ()
