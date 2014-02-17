@@ -3,7 +3,7 @@ cdnjs.el
 
 A front end for http://cdnjs.com
 
-## Synops
+## Synopsis
 
 This is an Emacs package for searching, getting information and
 downloading Javascript or CSS packages from [cdnjs].
