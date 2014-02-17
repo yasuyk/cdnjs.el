@@ -19,6 +19,8 @@ The Emacs package uses [gocdnjs] to get information about [cdnjs] packages.
 ### List packages and download a package
 ![](https://raw.github.com/yasuyk/misc/master/cdnjs.el/demo-cdnjs-list-and-download.gif)
 
+cdnjs.el with the [Spolsky] theme and the [Source Code Pro] font
+
 ### Insert URL
 ![](https://raw.github.com/yasuyk/misc/master/cdnjs.el/demo-cdnjs-insert-url.gif)
 
@@ -40,7 +42,7 @@ you can install `cdnjs.el` from the [MELPA](http://melpa.milkbox.net/) repositor
 
 The easiest way to install to install `gocdnjs` is to execute `M-x cdnjs-install-gocdnjs`.
 
-Note that Executing `cdnjs-install-gocdnjs` require `wget` and `unzip` commands.
+Note that executing `cdnjs-install-gocdnjs` require `wget` and `unzip` commands.
 
 After installed, You need not to configure `cdnjs-gocdnjs-program`.
 
@@ -103,3 +105,5 @@ After installed, configure `cdnjs-gocdnjs-program` as follow:
 
 [cdnjs]:http://cdnjs.com
 [gocdnjs]:https://github.com/yasuyk/gocdnjs
+[Spolsky]:https://github.com/owainlewis/emacs-color-themes#spolsky
+[Source Code Pro]:https://github.com/adobe/source-code-pro
