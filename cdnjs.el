@@ -73,12 +73,14 @@
 (require 'f)
 (require 'pkg-info) ; For `pkg-info-version-info'
 
+
 (defconst cdnjs/gocdnjs-name "gocdnjs")
 
 (defconst cdnjs/gocdnjs-dir (f-expand (f-join "~/" (concat "." cdnjs/gocdnjs-name))))
 
 (defconst cdnjs/gocdnjs-bin-dir (f-join cdnjs/gocdnjs-dir "bin"))
 
+(defconst cdnjs/gocdnjs-default-path (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name))
 
 ;;; Customization
 (defgroup cdnjs nil
@@ -93,8 +95,7 @@
                  (const :tag "Plain" completing-read)
                  (function :tag "Other function")))
 
-(defcustom cdnjs-gocdnjs-program
-  (f-join cdnjs/gocdnjs-bin-dir cdnjs/gocdnjs-name)
+(defcustom cdnjs-gocdnjs-program cdnjs/gocdnjs-default-path
   "Name of `gocdnjs' command.")
 
 
@@ -550,7 +551,7 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
 
 ;;;###autoload
 (defun cdnjs-install-gocdnjs ()
-  "Install `gocdnjs' command.
+  "Install `gocdnjs' command to `cdnjs/gocdnjs-bin-dir'.
 
 wget and unzip commands are required to use this function."
   (interactive)

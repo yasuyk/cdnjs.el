@@ -65,7 +65,7 @@ After installed, configure `cdnjs-gocdnjs-program` as follow:
 
 ## Usage
 
-- Install `gocdnjs` command:
+- Install `gocdnjs` command to ~/.gocdnjs/bin:
 
     `M-x cdnjs-install-gocdnjs`
 
