@@ -3,7 +3,7 @@
 ;; Copyright (C)  2014 Yasuyuki Oka <yasuyk@gmail.com>
 
 ;; Author: Yasuyuki Oka <yasuyk@gmail.com>
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; URL: https://github.com/yasuyk/cdnjs.el
 ;; Package-Requires: ((cl-lib "0.3") (dash "2.5.0") (deferred "0.3.2") (f "0.16.0") (pkg-info "0.4"))
 ;; Keywords: tools
