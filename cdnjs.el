@@ -270,13 +270,27 @@ Use parameters from `cdnjs/list-column-format'."
 
 \\{cdnjs-list-mode-map}."
   (setq truncate-lines t)
-  (setq tabulated-list-format
-        (cdnjs/list-column-format (cdnjs-info-name-max-column cdnjs/info)))
   (setq tabulated-list-sort-key cdnjs/list-sort-key)
+  (cdnjs/tabulated-list-entries-refresh)
+  (add-hook 'tabulated-list-revert-hook 'cdnjs/list-refresh nil t)
+  (tabulated-list-init-header))
+
+(defun cdnjs/tabulated-list-entries-refresh ()
+  "Refresh `tabuated-list-entries'."
+  (rename-buffer (cdnjs/list-mode-buffer-name))
+  (setq tabulated-list-format
+        (cdnjs/list-column-format
+         (cdnjs-info-name-max-column cdnjs/info)))
   (setq tabulated-list-entries
         (cdnjs/plists-to-tabulated-list-entries
-         (cdnjs-info-packages cdnjs/info)))
-  (tabulated-list-init-header))
+         (cdnjs-info-packages cdnjs/info))))
+
+(defun cdnjs/list-refresh ()
+  "Update pacakge cache file and re-populate the `tabulated-list-entries'."
+  (when (y-or-n-p "Update the package cache? ")
+  (deferred:$
+    (deferred:next 'cdnjs-update-package-cache)
+    (deferred:nextc it 'cdnjs/tabulated-list-entries-refresh))))
 
 (defun cdnjs/package-cache-path ()
   "Get the package cache file path."
@@ -541,6 +555,17 @@ copied from http://lists.gnu.org/archive/html/bug-gnu-emacs/2011-06/msg00474.htm
     (deferred:error it 'message)
     (deferred:nextc it 'cdnjs/info-show)))
 
+(defun cdnjs/update-package-cache ()
+  "Update the package cache file."
+  (deferred:$
+    (deferred:process cdnjs-gocdnjs-program "update")
+    (deferred:error it 'message)
+    (deferred:nextc it
+      (lambda ()
+        (message
+         (format "%s is updated."
+                 (cdnjs/package-cache-path)))))))
+
 (defun cdnjs/delete-executable-zip ()
   "Delete zip file."
   (let ((zip (f-join cdnjs/gocdnjs-bin-dir
@@ -622,14 +647,7 @@ wget and unzip commands are required to use this function."
   "Update the package cache file."
   (interactive)
   (cdnjs/verify-gocdnjs-version)
-  (deferred:$
-    (deferred:process cdnjs-gocdnjs-program "update")
-    (deferred:error it 'message)
-    (deferred:nextc it
-      (lambda ()
-        (message
-         (format "%s is updated."
-                 (cdnjs/package-cache-path)))))))
+  (cdnjs/update-package-cache))
 
 (provide 'cdnjs)
 
