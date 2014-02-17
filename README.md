@@ -40,7 +40,7 @@ you can install `cdnjs.el` from the [MELPA](http://melpa.milkbox.net/) repositor
 
 #### M-x cdnjs-install-gocdnjs
 
-The easiest way to install to install `gocdnjs` is to execute `M-x cdnjs-install-gocdnjs`.
+The easiest way to install `gocdnjs` is to execute `M-x cdnjs-install-gocdnjs`.
 
 Note that executing `cdnjs-install-gocdnjs` require `wget` and `unzip` commands.
 
