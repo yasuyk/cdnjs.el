@@ -1,6 +1,11 @@
 cdnjs.el
 ========
 
+[![melpa badge](http://melpa.org/packages/cdnjs-badge.svg)](http://melpa.org/#/cdnjs)
+[![melpa stable badge](http://stable.melpa.org/packages/cdnjs-badge.svg)](http://stable.melpa.org/#/cdnjs)
+[![travis build status](https://travis-ci.org/yasuyk/cdnjs.el.svg?branch=master)](https://travis-ci.org/yasuyk/cdnjs.el)
+
+
 A front end for http://cdnjs.com
 
 ## Synopsis
