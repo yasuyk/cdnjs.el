@@ -2,23 +2,17 @@
 EMACS ?= emacs
 CASK ?= cask
 SRC ?= cdnjs.el
-FIXTURE_GIT_VERSION ?= v1.0.0
-TEST_CHECKDOC_EL ?=  test/test-checkdoc.el
-TEST_CHECKDOC_LOG ?=  test/test-checkdoc.log
 TEST_PACKAGE_INSTALL_EL ?=  test/test-package-install.el
 TEST_PACKAGE_INSTALL_LOG ?=  test/test-package-install.log
 LOADPATH = -L .
 ELPA_DIR = $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
 .PHONY : test
-test: test-checkdoc test-package-install
-
-.PHONY : travis-test
 test: test-package-install
 
 .PHONY : unit-tests
 # `clean-elc` task needs to remove byte-compiled files to collect coverage by undercover.el.
-unit-tests: clean-elc elpa fixture
+unit-tests: clean-elc elpa
 	@echo "-- Running unit-tests --"
 	${CASK} exec ert-runner
 
@@ -31,18 +25,12 @@ clean-elc:
 	cask clean-elc
 
 .PHONY : clean
-clean: clean-elpa clean-elc clean-fixture
+clean: clean-elpa clean-elc
 
 .PHONY : print-deps
 print-deps:
 	${EMACS} --version
 	@echo CASK=${CASK}
-
-.PHONY : test-checkdoc
-test-checkdoc: elpa
-	@echo "-- test ckeckdoc --"
-	$(CASK) exec $(EMACS) -batch -Q $(LOADPATH) -l $(TEST_CHECKDOC_EL) 2>&1 | tee $(TEST_CHECKDOC_LOG)
-	@cat $(TEST_CHECKDOC_LOG) | [ $$(wc -l) -gt 0 ] && exit 1 || exit 0
 
 .PHONY : test-package-install
 test-package-install: elpa clean-package-install
@@ -56,7 +44,7 @@ clean-package-install:
 	rm -rf $(TEST_PACKAGE_INSTALL_LOG)
 
 .PHONY : travis-ci
-travis-ci: print-deps test-package-install travis-test
+travis-ci: print-deps test-package-install test
 
 .PHONY : elpa
 elpa: $(ELPA_DIR)
