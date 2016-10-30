@@ -5,7 +5,7 @@
 ;; Author: Yasuyuki Oka <yasuyk@gmail.com>
 ;; Version: 0.1.2
 ;; URL: https://github.com/yasuyk/cdnjs.el
-;; Package-Requires: ((cl-lib "0.3") (dash "2.5.0") (deferred "0.3.2") (f "0.16.0") (pkg-info "0.4"))
+;; Package-Requires: ((cl-lib "0.3") (dash "2.13.0") (deferred "0.4") (f "0.17.2") (pkg-info "0.5"))
 ;; Keywords: tools
 
 ;; This file is not part of GNU Emacs.
