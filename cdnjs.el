@@ -145,7 +145,7 @@ Slots:
 
 ;; `gocdnjs' executable
 
-(defconst cdnjs/gocdnjs-required-version "0.1.0")
+(defconst cdnjs/gocdnjs-required-version "0.2.0")
 
 (defconst cdnjs/gocdnjs-notfound-msg
   "gocdnjs not found. Install gocdnjs by M-x `cdnjs-install-gocdnjs' \
