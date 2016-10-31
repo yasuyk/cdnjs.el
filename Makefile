@@ -2,13 +2,20 @@
 EMACS ?= emacs
 CASK ?= cask
 SRC ?= cdnjs.el
+TEST_CHECKDOC_EL ?=  test/test-checkdoc.el
+TEST_CHECKDOC_LOG ?=  test/test-checkdoc.log
 TEST_PACKAGE_INSTALL_EL ?=  test/test-package-install.el
 TEST_PACKAGE_INSTALL_LOG ?=  test/test-package-install.log
 LOADPATH = -L .
 ELPA_DIR = $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
+INIT_PACKAGE_EL="(progn (require 'cask) (cask-initialize \".\"))"
+
 .PHONY : test
-test: test-package-install
+test: test-checkdoc package-lint test-package-install
+
+.PHONY : travis-ci
+travis-ci: print-deps package-lint test-package-install
 
 .PHONY : unit-tests
 # `clean-elc` task needs to remove byte-compiled files to collect coverage by undercover.el.
@@ -32,6 +39,18 @@ print-deps:
 	${EMACS} --version
 	@echo CASK=${CASK}
 
+.PHONY : test-checkdoc
+test-checkdoc: elpa
+	@echo "-- test ckeckdoc --"
+	$(CASK) exec $(EMACS) -batch -Q $(LOADPATH) -l $(TEST_CHECKDOC_EL) 2>&1 | tee $(TEST_CHECKDOC_LOG)
+	@cat $(TEST_CHECKDOC_LOG) | [ $$(wc -l) -gt 0 ] && exit 1 || exit 0
+
+
+.PHONY : package-lint
+package-lint: elpa clean-package-install
+	@echo "-- package lint --"
+	$(CASK) exec $(EMACS) -batch -Q --eval $(INIT_PACKAGE_EL) -l package-lint.el -f package-lint-batch-and-exit $(SRC)
+
 .PHONY : test-package-install
 test-package-install: elpa clean-package-install
 	@echo "-- test install package --"
@@ -40,11 +59,7 @@ test-package-install: elpa clean-package-install
 
 .PHONY : clean-package-install
 clean-package-install:
-	rm -rf $(ELPA_DIR)/helm-git-grep*
 	rm -rf $(TEST_PACKAGE_INSTALL_LOG)
-
-.PHONY : travis-ci
-travis-ci: print-deps test-package-install test
 
 .PHONY : elpa
 elpa: $(ELPA_DIR)
